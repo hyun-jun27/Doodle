@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+int main()
+{
+    FILE *lotto;
+    lotto = fopen("C:\\Users\\user\\Documents\\끄적끄적 C\\week02\\week02_03\\실행결과.txt", "wt");
+    if (lotto == NULL)
+    {
+        printf("파일 열기 실패\n");
+    }
+    else
+    {
+        printf("파일 열기 성공\n");
+    }
+    srand(time(NULL));
+
+    int ran[6];
+
+    int temp;
+    int i = 0;
+
+    while (i < 5)
+    {
+        for (int i = 0; i <= 5; i++)
+        {
+            ran[i] = rand() % 45 + 1;
+            for (int j = 0; j < i; j++)
+                if (ran[i] == ran[j])
+                    i--;
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            for (int j = i + 1; j < 6; j++)
+            {
+                if (ran[i] > ran[j])
+                {
+                    temp = ran[i];
+                    ran[i] = ran[j];
+                    ran[j] = temp;
+                }
+            }
+        }
+
+        for (int i = 0; i <= 5; i++)
+        {
+            fprintf(lotto, "%d ", ran[i]);
+        }
+        fprintf(lotto, "\n");
+        i++;
+    }
+    fclose(lotto);
+}
